@@ -1,9 +1,12 @@
 import React,{createContext, useState, useEffect} from 'react';
 import './style.css';
+// ui imports
+
 // components
 import SearchBar from './components/SearchBar';
 import axios from 'axios';
 import UserCard from './components/UserCard';
+import { AppBar, Toolbar } from '@mui/material';
 
 export const GithubContext = createContext();
 export const URL = `https://api.github.com/users/`
@@ -29,12 +32,21 @@ const App = () => {
   },[githubUser]);
 
   return (
-    <GithubContext.Provider value={{
-      githubUser, setGithubUser
-    }}>
-        <SearchBar/>
-        <UserCard/>
-    </GithubContext.Provider>
+    <div>
+    <AppBar>
+      <Toolbar>
+        
+      </Toolbar>
+    </AppBar>
+
+      <GithubContext.Provider value={{
+        githubUser, setGithubUser
+      }}>
+          <SearchBar/>
+          <UserCard/>
+      </GithubContext.Provider>
+    </div>
+  
   )
 }
 
