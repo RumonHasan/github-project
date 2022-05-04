@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{createContext, useState, useEffect} from 'react';
+import './style.css';
+// components
+import SearchBar from './components/SearchBar';
+import axios from 'axios';
+import UserCard from './components/UserCard';
 
-function App() {
+export const GithubContext = createContext();
+export const URL = `https://api.github.com/users/`
+
+const App = () => {
+  const [githubUser, setGithubUser] = useState('rumonhasan'); // default value
+  const [isLoading, setIsLoading] = useState(false);
+  const [userData, setUserData] = useState({});
+
+  // fetching all the userData from github API;
+  useEffect(()=>{
+    setIsLoading(true);
+      // fetching all the user data
+    const fetchAllData = ()=>{
+      axios.get(`${URL}${githubUser}`).then((response)=>{
+      setUserData(response.data);
+      })
+    }
+    fetchAllData();
+    return (()=>{
+      setIsLoading(false);
+    })
+  },[githubUser]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <GithubContext.Provider value={{
+      githubUser, setGithubUser
+    }}>
+        <SearchBar/>
+        <UserCard/>
+    </GithubContext.Provider>
+  )
 }
 
 export default App;
