@@ -1,49 +1,47 @@
 import React,{createContext, useState, useEffect} from 'react';
 import './style.css';
 // ui imports
-
+import { AppBar, Toolbar } from '@mui/material';
 // components
 import SearchBar from './components/SearchBar';
 import axios from 'axios';
 import UserCard from './components/UserCard';
-import { AppBar, Toolbar } from '@mui/material';
+// styles
+import { mainContainer } from './styles/mainStyles';
 
 export const GithubContext = createContext();
 export const URL = `https://api.github.com/users/`
 
 const App = () => {
-  const [githubUser, setGithubUser] = useState('rumonhasan'); // default value
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState({});
+  const [searchValue, setSearchValue] = useState('');
 
-  // fetching all the userData from github API;
-  useEffect(()=>{
-    setIsLoading(true);
-      // fetching all the user data
-    const fetchAllData = ()=>{
-      axios.get(`${URL}${githubUser}`).then((response)=>{
-      setUserData(response.data);
-      })
+  const handleSubmitName = async ()=>{
+    try{
+      if(!searchValue) return;
+      if(searchValue){
+        const response = await axios.get(`${URL}${searchValue}`);
+        setUserData(response.data);
+      }
+    }catch(err){
+      console.log(err);
     }
-    fetchAllData();
-    return (()=>{
-      setIsLoading(false);
-    })
-  },[githubUser]);
+  }
+  console.log(userData);
 
   return (
-    <div>
-    <AppBar>
-      <Toolbar>
-        
-      </Toolbar>
-    </AppBar>
-
-      <GithubContext.Provider value={{
-        githubUser, setGithubUser
+    <div style={mainContainer}>
+     <GithubContext.Provider value={{
+        searchValue, setSearchValue, handleSubmitName,
+        userData
       }}>
+      <AppBar>
+        <Toolbar>
           <SearchBar/>
-          <UserCard/>
+        </Toolbar>
+      </AppBar>
+        <UserCard/>
       </GithubContext.Provider>
     </div>
   

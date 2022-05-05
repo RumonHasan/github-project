@@ -1,0 +1,36 @@
+.card {
+  width: 70vw;
+  height: 70vh;
+  border: 2px solid black;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.avatar {
+  width: 15vw;
+  border-radius: 50%;
+  border: 5px solid black;
+}
+
+.cardContainer {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  align-items: center;
+}
+
+.cardHeaders {
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardContents {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+}
