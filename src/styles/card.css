@@ -1,11 +1,12 @@
 .card {
-  width: 70vw;
+  width: 50vw;
   height: 70vh;
   border: 2px solid black;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 10px;
 }
 .avatar {
   width: 15vw;
